@@ -1,6 +1,7 @@
 import express from "express";
 import mysql from "mysql2";
 import cors from "cors";
+import { DBCONFIG } from "./config/dbConfig.js";
 import { CONFIG } from "./config/config.js";
 
 const app = express();
@@ -8,11 +9,11 @@ app.use(cors());
 app.use(express.json());
 
 const db = mysql.createConnection({
-  host: CONFIG.host,
-  user: CONFIG.user,
-  password: CONFIG.password,
-  database: CONFIG.database,
-  port: CONFIG.port,
+  host: DBCONFIG.host,
+  user: DBCONFIG.user,
+  password: DBCONFIG.password,
+  database: DBCONFIG.database,
+  port: DBCONFIG.port,
 });
 
 db.connect((err) => {
@@ -48,6 +49,6 @@ app.get("/tasks", (req, res) => {
   });
 });
 
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
+app.listen(CONFIG.PORT, () => {
+  console.log("Server running on port " + CONFIG.PORT);
 });
